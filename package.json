@@ -9,7 +9,7 @@
   "author": "Mattias Holmqvist",
   "license": "MIT",
   "bin": {
-    "@serialized/create-project": "bin/create-project"
+    "@serialized/create": "bin/create"
   },
   "dependencies": {
     "arg": "^4.1.3",
