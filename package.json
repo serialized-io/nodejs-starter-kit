@@ -1,6 +1,6 @@
 {
   "name": "@serialized/create",
-  "version": "1.0.0",
+  "version": "0.0.1",
   "main": "src/index.js",
   "description": "A CLI for scaffolding Serialized projects using Typescript or Javascript",
   "scripts": {
