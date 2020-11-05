@@ -1,25 +1,24 @@
 import arg from 'arg';
 import inquirer from 'inquirer';
-import { createProject } from './main';
+import {createProject} from './main';
 
 function parseArgumentsIntoOptions(rawArgs) {
   const args = arg(
       {
         '--git': Boolean,
-        '--yes': Boolean,
         '--install': Boolean,
         '--name': String,
         '--aggregateType': String,
         '-g': '--git',
-        '-y': '--yes',
         '-i': '--install',
+        '-n': '--name',
+        '-a': '--aggregateType',
       },
       {
         argv: rawArgs.slice(2),
       }
   );
   return {
-    skipPrompts: args['--yes'] || false,
     git: args['--git'] || false,
     template: args._[0],
     projectName: args['--name'] || '',
@@ -30,15 +29,8 @@ function parseArgumentsIntoOptions(rawArgs) {
 
 async function promptForMissingOptions(options) {
   const defaultTemplate = 'typescript';
-  console.dir(options)
-  if (options.skipPrompts) {
-    return {
-      ...options,
-      template: options.template || defaultTemplate,
-    };
-  }
-
   const questions = [];
+
   if (!options.template) {
     questions.push({
       type: 'list',
