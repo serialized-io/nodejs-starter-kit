@@ -8,6 +8,8 @@ function parseArgumentsIntoOptions(rawArgs) {
         '--git': Boolean,
         '--yes': Boolean,
         '--install': Boolean,
+        '--name': String,
+        '--aggregateType': String,
         '-g': '--git',
         '-y': '--yes',
         '-i': '--install',
@@ -27,7 +29,8 @@ function parseArgumentsIntoOptions(rawArgs) {
 }
 
 async function promptForMissingOptions(options) {
-  const defaultTemplate = 'Typescript';
+  const defaultTemplate = 'typescript';
+  console.dir(options)
   if (options.skipPrompts) {
     return {
       ...options,
@@ -41,17 +44,8 @@ async function promptForMissingOptions(options) {
       type: 'list',
       name: 'template',
       message: 'Please choose which project template to use',
-      choices: ['TypeScript'],
+      choices: ['typescript'],
       default: defaultTemplate,
-    });
-  }
-
-  if (!options.git) {
-    questions.push({
-      type: 'confirm',
-      name: 'git',
-      message: 'Initialize a git repository?',
-      default: false,
     });
   }
 

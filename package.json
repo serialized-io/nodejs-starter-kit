@@ -4,7 +4,7 @@
   "main": "src/index.js",
   "description": "A CLI for scaffolding Serialized projects using Typescript or Javascript",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm link && mkdir -p build && cd build && rm -rf * &&  npm init @serialized --name test --aggregateType game typescript && npm link @serialized/create && npm install && npm run build"
   },
   "author": "Mattias Holmqvist",
   "license": "MIT",

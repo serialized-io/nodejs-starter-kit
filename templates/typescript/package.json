@@ -12,7 +12,7 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "@serialized/serialized-client": "^2.2.0",
+    "@serialized/serialized-client": "latest",
     "@types/uuid": "^8.3.0",
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
