@@ -21,11 +21,15 @@ async function copyRootFile(options, filename) {
 async function copyTemplateFiles(options) {
   await copyRootFile(options, '.gitignore')
   await copyRootFile(options, 'package-lock.json')
+  await copyRootFile(options, 'jest.config.js')
   await copyRootFile(options, 'tsconfig.json')
   await copyRootFile(options, '.env')
-  const targetSrc = path.join(options.targetDirectory, 'src');
+  const targetSrcDir = path.join(options.targetDirectory, 'src');
+  const targetSpecDir = path.resolve(options.targetDirectory, 'spec');
   const srcDir = path.resolve(options.templateDirectory, 'src');
-  await fs.mkdirSync(targetSrc)
+  const specDir = path.resolve(options.templateDirectory, 'spec');
+  await fs.mkdirSync(targetSrcDir)
+  await fs.mkdirSync(targetSpecDir)
 
   const readAndReplace = async function (srcDir, targetDir, filename) {
     try {
@@ -37,8 +41,9 @@ async function copyTemplateFiles(options) {
   }
 
   await readAndReplace(options.templateDirectory, options.targetDirectory, 'package.json')
-  await readAndReplace(srcDir, targetSrc, 'model.ts')
-  await readAndReplace(srcDir, targetSrc, 'server.ts')
+  await readAndReplace(srcDir, targetSrcDir, 'model.ts')
+  await readAndReplace(srcDir, targetSrcDir, 'server.ts')
+  await readAndReplace(specDir, targetSpecDir, 'model.spec.ts')
 }
 
 async function initGit(options) {

@@ -44,9 +44,13 @@ class <%= aggregateType %> {
   }
 
   start(<%= aggregateTypeSlug %>Id: string) {
-      return [new <%= aggregateType %>Started(<%= aggregateTypeSlug %>Id)];
+      if(this.state.status === 'created') {
+        return [new <%= aggregateType %>Started(<%= aggregateTypeSlug %>Id)];
+      } else {
+        throw new Error('<%= aggregateType %> has not been started')
+      }
   }
 
 }
 
-export {<%= aggregateType %>}
+export {<%= aggregateType %>, <%= aggregateType %>State, <%= aggregateType %>Created, <%= aggregateType %>Started}
