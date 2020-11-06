@@ -2,6 +2,7 @@ import express from 'express';
 import dotenv from 'dotenv';
 import {Serialized} from "@serialized/serialized-client";
 import {<%= aggregateType %>} from "./model"
+import chalk from "chalk";
 
 dotenv.config();
 const configuration = {
@@ -39,6 +40,7 @@ app.post("/start-<%= aggregateTypeSlug %>", async (req: any, res) => {
 
 
 app.listen(configuration.port, () => {
-  console.log(`Server is running at https://localhost:${configuration.port}`);
+  console.log(`Application ${chalk.green.bold('<%= projectName %>')} is up and running.`);
+  console.log(`API is available at: https://localhost:${configuration.port}`);
 });
 
