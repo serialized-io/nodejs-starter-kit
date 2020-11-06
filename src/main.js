@@ -11,17 +11,17 @@ const access = promisify(fs.access);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-async function copyRootFile(options, filename) {
+async function copyRootFile(options, filename, destinationFile) {
   const contents = await readFile(path.resolve(options.templateDirectory, filename), 'utf8');
-  await writeFile(path.resolve(options.targetDirectory, filename), contents)
+  await writeFile(path.resolve(options.targetDirectory, destinationFile), contents)
 }
 
 async function copyTemplateFiles(options) {
-  await copyRootFile(options, '.gitignore')
-  await copyRootFile(options, 'package-lock.json')
-  await copyRootFile(options, 'jest.config.js')
-  await copyRootFile(options, 'tsconfig.json')
-  await copyRootFile(options, '.env')
+  await copyRootFile(options, 'gitignore', '.gitignore')
+  await copyRootFile(options, 'package-lock.json', 'package-lock.json')
+  await copyRootFile(options, 'jest.config.js', 'jest.config.js')
+  await copyRootFile(options, 'tsconfig.json', 'tsconfig.json')
+  await copyRootFile(options, '.env', '.env')
   const targetSrcDir = path.join(options.targetDirectory, 'src');
   const targetSpecDir = path.resolve(options.targetDirectory, 'spec');
   const srcDir = path.resolve(options.templateDirectory, 'src');
