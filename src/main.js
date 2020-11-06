@@ -4,11 +4,9 @@ import path from 'path';
 import execa from 'execa';
 import Listr from 'listr';
 import {projectInstall} from 'pkg-install';
-import ncp from 'ncp'
 import {promisify} from 'util';
 import ejs from 'ejs';
 
-const copy = promisify(ncp);
 const access = promisify(fs.access);
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
@@ -63,17 +61,13 @@ export async function createProject(options) {
   };
 
   const currentFileUrl = import.meta.url;
-  const templateDir = path.resolve(
-      new URL(currentFileUrl).pathname,
-      '../../templates',
-      options.template.toLowerCase()
-  );
+  const templateDir = path.resolve(new URL(currentFileUrl).pathname, '../../templates', options.template.toLowerCase());
   options.templateDirectory = templateDir;
 
   try {
     await access(templateDir, fs.constants.R_OK);
   } catch (err) {
-    console.error('%s Invalid template name', chalk.red.bold('ERROR'));
+    console.error('%s Failed to read from template source directory', chalk.red.bold('ERROR'), chalk.red.bold(err));
     process.exit(1);
   }
 
