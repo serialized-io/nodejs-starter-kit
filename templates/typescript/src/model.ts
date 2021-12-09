@@ -5,12 +5,12 @@ class <%= aggregateType %>State {
   readonly status?: string;
 }
 
-class <%= aggregateType %>Created implements DomainEvent {
+class <%= aggregateType %>Created {
   constructor(readonly <%= aggregateTypeSlug %>Id: string) {
   };
 }
 
-class <%= aggregateType %>Started implements DomainEvent {
+class <%= aggregateType %>Started {
   constructor(readonly <%= aggregateTypeSlug %>Id: string) {
   };
 }
@@ -22,12 +22,12 @@ class <%= aggregateType %>StateBuilder {
   }
 
   @EventHandler(<%= aggregateType %>Created)
-  handle<%= aggregateType %>Created(event: <%= aggregateType %>Created, state: <%= aggregateType %>State): <%= aggregateType %>State {
+  handle<%= aggregateType %>Created(state: <%= aggregateType %>State, event: DomainEvent<<%= aggregateType %>Created>): <%= aggregateType %>State {
     return {<%= aggregateTypeSlug %>Id: state.<%= aggregateTypeSlug %>Id, status: 'created'};
   }
 
   @EventHandler(<%= aggregateType %>Started)
-  handle<%= aggregateType %>Started(event: <%= aggregateType %>Created, state: <%= aggregateType %>State): <%= aggregateType %>State {
+  handle<%= aggregateType %>Started(state: <%= aggregateType %>State, event: DomainEvent<<%= aggregateType %>Created>): <%= aggregateType %>State {
     return {<%= aggregateTypeSlug %>Id: state.<%= aggregateTypeSlug %>Id, status: 'started'};
   }
 
@@ -40,12 +40,12 @@ class <%= aggregateType %> {
   }
 
   create(<%= aggregateTypeSlug %>Id: string) {
-      return [new <%= aggregateType %>Created(<%= aggregateTypeSlug %>Id)];
+      return [DomainEvent.create(new <%= aggregateType %>Created(<%= aggregateTypeSlug %>Id))];
   }
 
   start(<%= aggregateTypeSlug %>Id: string) {
       if(this.state.status === 'created') {
-        return [new <%= aggregateType %>Started(<%= aggregateTypeSlug %>Id)];
+        return [DomainEvent.create(new <%= aggregateType %>Started(<%= aggregateTypeSlug %>Id))];
       } else {
         throw new Error('<%= aggregateType %> has not been started')
       }

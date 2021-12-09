@@ -23,18 +23,18 @@ app.get('/', (req: express.Request, res: express.Response) => res.send(`Backend 
 app.post("/create-<%= aggregateTypeSlug %>", async (req: any, res) => {
   const <%= aggregateTypeSlug %>Id = req.body.<%= aggregateTypeSlug %>Id;
   const <%= aggregateTypeSlug %>Client = serializedClient.aggregateClient<<%= aggregateType %>>(<%= aggregateType %>)
-  await <%= aggregateTypeSlug %>Client.create(<%= aggregateTypeSlug %>Id, (<%= aggregateTypeSlug %>) => ({
-    events: <%= aggregateTypeSlug %>.create(<%= aggregateTypeSlug %>Id)
-  }));
+  await <%= aggregateTypeSlug %>Client.create(<%= aggregateTypeSlug %>Id, (<%= aggregateTypeSlug %>) => (
+    <%= aggregateTypeSlug %>.create(<%= aggregateTypeSlug %>Id)
+  ));
   res.sendStatus(200);
 });
 
 app.post("/start-<%= aggregateTypeSlug %>", async (req: any, res) => {
   const <%= aggregateTypeSlug %>Id = req.body.<%= aggregateTypeSlug %>Id;
   const <%= aggregateTypeSlug %>Client = serializedClient.aggregateClient<<%= aggregateType %>>(<%= aggregateType %>)
-  await <%= aggregateTypeSlug %>Client.update(<%= aggregateTypeSlug %>Id, (<%= aggregateTypeSlug %>) => ({
-    events: <%= aggregateTypeSlug %>.start(<%= aggregateTypeSlug %>Id)
-  }));
+  await <%= aggregateTypeSlug %>Client.update(<%= aggregateTypeSlug %>Id, (<%= aggregateTypeSlug %>) => (
+      <%= aggregateTypeSlug %>.start(<%= aggregateTypeSlug %>Id)
+  ));
   res.sendStatus(200);
 });
 
